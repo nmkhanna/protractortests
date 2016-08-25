@@ -1,3 +1,4 @@
+var creds = require('./credentials')
 prt = function(s, o) {
 	if (o) {
 		s += JSON.Stringify(o, null, 2);
@@ -7,7 +8,7 @@ prt = function(s, o) {
 
 var EC = protractor.ExpectedConditions;
 var LocationSkuPage = require('./locationSkuPage');
-var LocationSkuData = require('./locationSkuData');
+//var LocationSkuData = require('./locationSkuData');
 
 describe('Mosaic App', function() {
 	var page;
@@ -16,9 +17,9 @@ describe('Mosaic App', function() {
 		browser.driver.get('http://localhost:8000/');
 		browser.driver.ignoreSynchronization = true;
 		browser.driver.findElement(by.id('username')).clear();
-		browser.driver.findElement(by.id('username')).sendKeys('nkhanna');
+		browser.driver.findElement(by.id('username')).sendKeys(creds.username);
 		browser.driver.findElement(by.id('password')).clear();
-		browser.driver.findElement(by.id('password')).sendKeys('****');
+		browser.driver.findElement(by.id('password')).sendKeys(creds.password);
 		browser.driver.findElement(by.css('input[type="submit"]')).click();
 	});
 
@@ -34,7 +35,7 @@ describe('Mosaic App', function() {
 			expect(browserLog.length).toEqual(0);
 		});
 	})
-	
+
 //	describe('Location/Sku Search Functionality', function() {
 //		beforeEach(function() {
 //			page = new LocationSkuPage();
@@ -52,7 +53,7 @@ describe('Mosaic App', function() {
 //		});
 //	});
 
-	
+
 	describe('Sanity Check', function() {
 //		it('should show Demand Dashboard', function() {
 //			var DemandDashboardPage = require('./demandDashboardPage');
@@ -95,13 +96,18 @@ describe('Mosaic App', function() {
 //			page.search('2222469');
 //			expect(page.companies.count()).toBeGreaterThan(0);
 //		});
-		it('should show Retail - Search By COT', function() {
-			var RetailSearchByCotPage = require('./retailSearchByCotPage');
-			var page = new RetailSearchByCotPage();
-			page.searchCot('12100702080320160612'); // TODO: need to get this from DB.
-			expect(page.orderLines.count()).toBeGreaterThan(0);
+		// it('should show Retail - Search By COT', function() {
+		// 	var RetailSearchByCotPage = require('./retailSearchByCotPage');
+		// 	var page = new RetailSearchByCotPage();
+		// 	page.searchCot('12100702080320160612'); // TODO: need to get this from DB.
+		// 	expect(page.orderLines.count()).toBeGreaterThan(0);
+		// });
+		it('should load all services', function() {
+			var ServiceStatusesPage = require('./serviceStatusesPage');
+			var page = new ServiceStatusesPage();
+			expect(page.services.count()).toBeGreaterThan(0);
 		});
-		
+
 	});
 
 });
