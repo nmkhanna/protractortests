@@ -103,6 +103,12 @@ describe('Mosaic App', function() {
 		// 	page.searchCot('12100702080320160612'); // TODO: need to get this from DB.
 		// 	expect(page.orderLines.count()).toBeGreaterThan(0);
 		// });
+		it('should populate results when "All Statuses is selected"', function() {
+			var TransloadPage = require('./transloadPage');
+			var page = new TransloadPage();
+			page.populate();
+			expect(page.resultsCount()).toBeGreaterThan(0);
+		});
 		it('should show more results when button is clicked', function() {
 			var LocationsPage = require('./locationsPage');
 			var page = new LocationsPage();
