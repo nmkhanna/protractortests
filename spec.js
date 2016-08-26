@@ -1,4 +1,5 @@
-var creds = require('./credentials')
+var creds = require('./credentials').credentials
+
 prt = function(s, o) {
 	if (o) {
 		s += JSON.Stringify(o, null, 2);
@@ -102,6 +103,17 @@ describe('Mosaic App', function() {
 		// 	page.searchCot('12100702080320160612'); // TODO: need to get this from DB.
 		// 	expect(page.orderLines.count()).toBeGreaterThan(0);
 		// });
+		it('should show more results when button is clicked', function() {
+			var LocationsPage = require('./locationsPage');
+			var page = new LocationsPage();
+			page.locationsCount().then(function(res) {
+				var beforeCount = res;
+				page.toggle();
+				page.locationsCount().then(function(res) {
+					expect(res).toBeGreaterThan(beforeCount);
+				})
+			})
+		});
 		it('should load all services', function() {
 			var ServiceStatusesPage = require('./serviceStatusesPage');
 			var page = new ServiceStatusesPage();
